@@ -1,18 +1,16 @@
 return {
   {
-    'sainnhe/gruvbox-material',
+    'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
+    opts = {},
     config = function()
-      -- Optionally configure and load the colorscheme
-      -- directly inside the plugin declaration.
+      require('tokyonight').setup {
+        style = 'moon',
+        transparent = true,
+      }
 
-      vim.g.gruvbox_material_transparent_background = 1
-      vim.g.gruvbox_material_enable_italic = true
-      vim.g.gruvbox_material_background = 'hard'
-      vim.g.gruvbox_material_palette = 'mix'
-
-      vim.cmd.colorscheme 'gruvbox-material'
+      vim.cmd 'colorscheme tokyonight'
     end,
   },
 }

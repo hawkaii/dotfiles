@@ -321,11 +321,11 @@ client.urgent           $gruvbox_bg $gruvbox_red $gruvbox_bg $gruvbox_fg
 for_window [class=".*"] border pixel 2
 
 # Smart Gaps
-smart_gaps on
+# smart_gaps on
 
 
 # Set inner/outer gaps
-gaps inner 12
+gaps inner 10
 gaps outer 0
 
 # Gaps mode
@@ -371,13 +371,25 @@ mode "$mode_gaps_outer" {
 # for_window [title="Desktop — Plasma"] kill; floating enable; border none
 
 
+#set wallpaper
+exec_always xrandr --output eDP --primary --mode 1920x1080 --pos 1366x0 --rotate normal --output HDMI-A-0 --mode 1366x768 --pos 0x201 --rotate normal
+exec_always --no-startup-id feh --bg-scale ~/dotfiles/backgrounds/wall-03.webp --bg-fill ~/dotfiles/backgrounds/wall-05.webp
+#
 
-exec_always --no-startup-id picom -bc
-exec --no-startup-id "obsidian"
+
+exec_always --no-startup-id picom --experimental-backends --config ~/.config/picom/picom.conf
+exec --no-startup-id ~/Applications/Obsidian-1.6.7_fbe5be623488d0ecebb94f3b174ba197.AppImage
 exec_always --no-startup-id spotify
 exec --no-startup-id "wezterm"
 exec --no-startup-id "kitty"
 exec --no-startup-id "firefox"
+exec --no-startup-id ~/dotfiles/scripts/vlc.sh
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.  
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+exec --no-startup-id thunar
+exec_always --no-startup-id copyq
 
 exec_always --no-startup-id syncthing
 
@@ -386,39 +398,17 @@ exec_always --no-startup-id syncthing
 assign [class="firefox" instance="Navigator"] → $ws1
 assign [class="konsole"] → $ws3
 assign [class="kitty"] → $ws3
-# assign [class="vivaldi-stable" instance="Vivaldi-stable"] → 1
-# assign [class="vivaldi-stable"]  → 1
-# for_window [class="Spotify"] move to workspace $ws5
-
 assign [class="obsidian"] → $ws4
 
 
-#set wallpaper
-
-exec_always xrandr --output eDP --primary --mode 1920x1080 --pos 1366x0 --rotate normal --output HDMI-A-0 --mode 1366x768 --pos 0x201 --rotate normal
-
-exec_always --no-startup-id feh --bg-scale ~/dotfiles/backgrounds/wall-03.webp --bg-fill ~/dotfiles/backgrounds/wall-06.webp
-
-#
-
-for_window [class="keepassxc"]  move scratchpad
-bindsym $mod+Ctrl+p [class = "keepassxc"] scratchpad show ; border pixel 5 
-for_window [class="dolphin"]  move scratchpad
-bindsym $mod+Ctrl+n [class = "dolphin"] scratchpad show ; border pixel 5 
-
-for_window [class="wezterm"]  move scratchpad
-bindsym $mod+Ctrl+comma [class = "wezterm"] scratchpad show ; border pixel 5  
-
+for_window [class="Thunar"]  move scratchpad
+bindsym $mod+Ctrl+n [class = "Thunar"] scratchpad show ; border pixel 5 
 
 for_window  [class= "Spotify"] move scratchpad
 bindsym $mod+Ctrl+m [class = "Spotify"] scratchpad show ; border pixel 5  
 
-# bindsym $mod+Shift+o  [class= "kitty"] scratchpad show; move position center
-# exec --no-startup-id kitty
-# Make the currently focused window a scratchpad
-
-# Show the first scratchpad windowt
-
+for_window [class="pavucontrol"] move scratchpad
+bindsym $mod+Ctrl+p exec --no-startup-id pavucontrol; [class="pavucontrol"] scratchpad show; border pixel 5
 
 
 
@@ -444,11 +434,6 @@ bindsym $mod+Ctrl+m [class = "Spotify"] scratchpad show ; border pixel 5
 # bindsym $mod+p exec dmenu_run -nb "$fg" -nf "$bg" -sb "$bg" -sf "$fg"
 #
 
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.  
-exec --no-startup-id nm-applet
-exec --no-startup-id blueman-applet
-exec_always --no-startup-id copyq
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -463,15 +448,14 @@ set $u-bgcolor	#ff0000
 set $indicator	#a8a3c1
 set $in-text	#969696
 set $focused-ws	#523d6480
-set $bar-color	#523d640D
+set $bar-color	#196cbd80
 
 
 bar {
   # status_command i3blocks       # Invoke i3blocks.
-  position top
   status_command i3blocks -c /home/$USER/.config/i3blocks/i3blocks.conf
-  i3bar_command i3bar --transparency
-  tray_output none
+  # i3bar_command i3bar --transparency
+  # tray_output none
 	font pango: Droid Sans Mono 11
 	colors {
 		background $bar-color
