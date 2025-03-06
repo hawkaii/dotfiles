@@ -124,15 +124,6 @@ alias ls='ls --color'
 alias vim='nvim'
 alias c='clear'
 
-# Shell integrations
-# Set up fzf key bindings and fuzzy completion
-# source /usr/share/doc/fzf/examples/key-bindings.zsh
-# source /usr/share/doc/fzf/examples/completion.zsh
-
-
-
-
-
 
 
 export NVM_DIR="$HOME/.nvm"
@@ -141,3 +132,25 @@ export NVM_DIR="$HOME/.nvm"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+fpath=(~/.docker/completions \/home/hawkaii/.local/share/zinit/completions /usr/local/share/zsh/site-functions /usr/share/zsh/site-functions /usr/share/zsh/5.9/functions /home/hawkaii/.local/share/zinit/plugins/zsh-users---zsh-completions/src /home/hawkaii/.local/share/zinit/plugins/Aloxaf---fzf-tab/lib /home/hawkaii/.local/share/zinit/plugins/zsh-users---zsh-completions/src)
+autoload -Uz compinit
+compinit
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/hawkaii/google-cloud-sdk/path.zsh.inc' ]; then . '/home/hawkaii/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/hawkaii/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/hawkaii/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Turso
+export PATH="$PATH:/home/hawkaii/.turso"
+#Android
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# opam configuration
+[[ ! -r /home/hawkaii/.opam/opam-init/init.zsh ]] || source /home/hawkaii/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+# go configuration
+export PATH=$PATH:/usr/local/go/bin

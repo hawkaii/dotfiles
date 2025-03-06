@@ -13,7 +13,7 @@ VLC_PID=$!
 sleep 1
 
 # Set the volume to 1% using playerctl
-playerctl --player=vlc volume 0.05
+playerctl --player=vlc volume 0.01
 
 # Wait for the VLC process to end
 wait $VLC_PID

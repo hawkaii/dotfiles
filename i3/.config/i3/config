@@ -1,20 +1,3 @@
-## quick terminal
-# Add this to your i3 config (~/.config/i3/config) and restart i3 (Super+Shift+R)
-#for_window [class="kitty"] move scratchpad, move position 150 150, resize set 1700 800; #bindsym Mod1+space [class="kitty"] scratchpad show; # (No) Title Bars for_window [class="^.*"] border pixel 0 Gaps #gaps inner 10 #gaps outer 0 #smart_gaps on
-# Assign workspaces to screens
-#  On E560, eDP-1 is the first display, while DP-2 is VGA output
-#workspace 1 output eDP
-#workspace 2 output eDP-1
-#workspace 3 output eDP-1
-#workspace 4 output eDP-1
-#workspace 5 output DP-2
-#workspace 6 output DP-2
-#workspace 7 output DP-2
-#workspace 8 output DP-2
-# Assign applications to workspaces
-#  xprop | grep "CLASS"
-#assign [class="Firefox"] 1
-#assign [class="sublime_text"] 2
 
 set $black       #212121
 set $darkblack   #000000
@@ -34,16 +17,13 @@ set $white       #ebdbb2
 set $darkwhite   #a89984
 set $background  #000000
 set $transparent #00000000
+#
 
 
-
+#set monitor
 set $pm eDP
 set $sm HDMI-A-0
 
-# User-added function keys:
-#bindsym XF86AudioMute         exec --no-startup-id pamixer -t     && pkill -RTMIN+1 i3blocks
-#bindsym XF86AudioLowerVolume  exec --no-startup-id pamixer -d 3   && pkill -RTMIN+1 i3blocks
-#bindsym XF86AudioRaiseVolume  exec --no-startup-id pamixer -i 3   && pkill -RTMIN+1 i3blocks
 
 # Play/Pause
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
@@ -55,17 +35,14 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 
-
+# Volume controls
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+1 i3blocks
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% && pkill -RTMIN+1 i3blocks
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% && pkill -RTMIN+1 i3blocks
 
+# Brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
-
-# bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
-# bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
-
 
 # Windows button
 set $mod Mod4
@@ -82,6 +59,7 @@ font pango:Helvetica Neue, FontAwesome 11
 floating_modifier $mod
 
 
+# screenshot
 bindsym Print exec --no-startup-id flameshot gui
 
 # Start a terminal
@@ -97,17 +75,6 @@ bindsym $mod+x move workspace to output right
 # rofi
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -dmenu -font "Inter 17" '
 bindsym $mod+d exec --no-startup-id synapse
-
-
-
-
-
-# Screenshot (now provided by Plasma)
-# bindsym Print exec --no-startup-id spectacle
-
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+h focus left
@@ -167,15 +134,15 @@ bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_
 
 # workspace names
 set $ws1 "1"
-set $ws2 "2:work"
+set $ws2 "2"
 set $ws3 "3"
-set $ws4 "4:notes"
-set $ws5 "5:music"
-set $ws6 "6:misc"
-set $ws7 "7:misc"
-set $ws8 "8:misc"
-set $ws9 "9:misc"
-set $ws10 "10:misc"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
 
 
 # switch to workspace
@@ -205,12 +172,13 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 #monitors
 workspace 1 output $pm
 workspace 2 output $pm
+workspace 7 output $pm
+workspace 8 output $pm
+
 workspace 3 output $sm
 workspace 4 output $sm
 workspace 5 output $sm
 workspace 6 output $sm
-workspace 7 output $pm
-workspace 8 output $pm
 
 # Move focus between screens
 bindsym $mod+Alt+h focus output left
@@ -224,12 +192,6 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-
-
-# Audio controls (now provided by Plasma)
-# bindsym XF86AudioLowerVolume exec ~/audio.sh --down
-# bindsym XF86AudioRaiseVolume exec ~/audio.sh --up
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -257,72 +219,15 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Borders
 
-# Applications behaving as "pop ups" are set to be always floating
-#  i.e. popup, do stuff, close
-# To get WM_CLASS and WM_TITLE values, on X run "xprop"
-for_window [class="yakuake"] floating enable
-for_window [class="systemsettings"] floating enable
-
+        client.focused           #9aa5ce #364A82 #c0caf5 #9aa5ce   #9aa5ce
+        client.focused_inactive  #16161d #16161d #c0caf5 #16161d   #16161d
+        client.unfocused         #16161d #16161d #c0caf5 #16161d   #16161d
 
 
-## Avoid tiling popups, dropdown windows from plasma
-# for the first time, manually resize them, i3 will remember the setting for floating windows
-# Plasma compatibility improvements
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="task_dialog"] floating enable
-
-for_window [class="yakuake"] floating enable
-for_window [class="systemsettings"] floating enable
-for_window [class="plasmashell"] floating enable;
-for_window [class="Plasma"] floating enable; border none
-for_window [title="plasma-desktop"] floating enable; border none
-for_window [title="win7"] floating enable; border none
-for_window [class="krunner"] floating enable; border none
-for_window [class="Kmix"] floating enable; border none
-for_window [class="Klipper"] floating enable; border none
-for_window [class="Plasmoidviewer"] floating enable; border none
-for_window [class="(?i)*nextcloud*"] floating disable
-for_window [class="plasmashell" window_type="notification"] border none, move position 70 ppt 81 ppt
-no_focus [class="plasmashell" window_type="notification"]
-
-
-
-
-
-for_window [class="copyq"] floating enable; border none
-
-
-### i3-gaps stuff ###
-
-# Necessary for i3-gaps to work properly (pixel can be any value)
-
-# Gruvbox color scheme
-set $gruvbox_bg         #282828
-set $gruvbox_fg         #ebdbb2
-set $gruvbox_red        #cc241d
-set $gruvbox_green      #98971a
-set $gruvbox_yellow     #d79921
-set $gruvbox_blue       #458588
-set $gruvbox_purple     #b16286
-set $gruvbox_aqua       #689d6a
-set $gruvbox_orange     #d65d0e
-
-# Smart Borders
-smart_borders on
-
-# Border colors
-client.focused          $gruvbox_bg $gruvbox_orange $gruvbox_bg $gruvbox_fg
-client.focused_inactive $gruvbox_bg $gruvbox_fg $gruvbox_bg $gruvbox_fg
-client.unfocused        $gruvbox_bg $gruvbox_fg $gruvbox_bg $gruvbox_fg
-client.urgent           $gruvbox_bg $gruvbox_red $gruvbox_bg $gruvbox_fg
-
-# Override the default border width when focused
 for_window [class=".*"] border pixel 2
-
-# Smart Gaps
-# smart_gaps on
-
+for_window [class="copyq"] floating enable; border none
 
 # Set inner/outer gaps
 gaps inner 10
@@ -367,22 +272,30 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
-
-# for_window [title="Desktop — Plasma"] kill; floating enable; border none
-
-
+# exec --no-startup-id sh -c "sleep 2; wal -R"
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 #set wallpaper
-exec_always xrandr --output eDP --primary --mode 1920x1080 --pos 1366x0 --rotate normal --output HDMI-A-0 --mode 1366x768 --pos 0x201 --rotate normal
-exec_always --no-startup-id feh --bg-scale ~/dotfiles/backgrounds/wall-03.webp --bg-fill ~/dotfiles/backgrounds/wall-05.webp
-#
 
 
-exec_always --no-startup-id picom --experimental-backends --config ~/.config/picom/picom.conf
+bindsym $mod+Ctrl+h exec ~/.config/i3/scripts/horizontal.sh
+bindsym $mod+Ctrl+v exec ~/.config/i3/scripts/vertical.sh
+
+
+exec --no-startup-id ~/.config/i3/scripts/vertical.sh
+
+exec --no-startup-id ~/.config/i3/scripts/auto_lock.sh
+
+
+
+# exec_always --no-startup-id picom --experimental-backends --config ~/.config/picom/picom.conf
+# Kill picom and restart it with custom options
+# exec_always --no-startup-id bash -c 'killall picom; picom --experimental-backends --config ~/.config/picom/picom.conf'
+exec_always --no-startup-id ~/.config/i3/scripts/picom.sh
 exec --no-startup-id ~/Applications/Obsidian-1.6.7_fbe5be623488d0ecebb94f3b174ba197.AppImage
 exec_always --no-startup-id spotify
 exec --no-startup-id "wezterm"
 exec --no-startup-id "kitty"
-exec --no-startup-id "firefox"
+# exec --no-startup-id "firefox"
 exec --no-startup-id ~/dotfiles/scripts/vlc.sh
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.  
@@ -395,10 +308,10 @@ exec_always --no-startup-id syncthing
 
 
 
-assign [class="firefox" instance="Navigator"] → $ws1
+assign [class="zen" instance="Navigator"] → $ws1
 assign [class="konsole"] → $ws3
 assign [class="kitty"] → $ws3
-assign [class="obsidian"] → $ws4
+assign [class="obsidian"] → $ws2
 
 
 for_window [class="Thunar"]  move scratchpad
@@ -410,71 +323,5 @@ bindsym $mod+Ctrl+m [class = "Spotify"] scratchpad show ; border pixel 5
 for_window [class="pavucontrol"] move scratchpad
 bindsym $mod+Ctrl+p exec --no-startup-id pavucontrol; [class="pavucontrol"] scratchpad show; border pixel 5
 
-
-
-# Set colors from Xresources
-# Change 'color7' and 'color2' to whatever colors you want i3 to use 
-# from the generated scheme.
-# # NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
-# # it fails to get colors from Xresources.
-# set_from_resource $fg i3wm.color7 #f0f0f0
-# set_from_resource $bg i3wm.color2 #f0f0f0
-#
-# # class                 border  backgr. text indicator child_border
-# client.focused          $bg     $bg     $fg  $bg       $bg
-# client.focused_inactive $bg     $bg     $fg  $bg       $bg
-# client.unfocused        $bg     $bg     $fg  $bg       $bg
-# client.urgent           $bg     $bg     $fg  $bg       $bg
-# client.placeholder      $bg     $bg     $fg  $bg       $bg
-#
-# client.background       $bg
-#
-#
-# # PROTIP: You can also dynamically set dmenu's colors this way:
-# bindsym $mod+p exec dmenu_run -nb "$fg" -nf "$bg" -sb "$bg" -sf "$fg"
-#
-
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-#bar {
-#        status_command i3status
-#}
-# Color shemes for windows
-set $bgcolor	#523d6499
-set $in-bgcolor #3636364D
-set $text	#ffffff
-set $u-bgcolor	#ff0000
-set $indicator	#a8a3c1
-set $in-text	#969696
-set $focused-ws	#523d6480
-set $bar-color	#196cbd80
-
-
-bar {
-  # status_command i3blocks       # Invoke i3blocks.
-  status_command i3blocks -c /home/$USER/.config/i3blocks/i3blocks.conf
-  # i3bar_command i3bar --transparency
-  # tray_output none
-	font pango: Droid Sans Mono 11
-	colors {
-		background $bar-color
-		separator #191919
-		#			border		background	text
-		focused_workspace	$focused-ws	$focused-ws	$text
-		inactive_workspace	$in-bgcolor	$in-bgcolor	$text
-		urgent_workspace	$u-bgcolor	$u-bgcolor	$text	
-
-	}
-   # colors {
-   #       background #30232D
-   #      # background $bg
-   #      # statusline $fg
-   #      # separator $fg
-   #  }
-
-  # Possible other bar configurations go here...
-  # ...
-}
 
 
