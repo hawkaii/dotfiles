@@ -6,10 +6,10 @@ return {
     config = function()
       require('copilot').setup {
         suggestion = {
-          auto_trigger = true,
+          auto_trigger = false,
           keymap = {
             accept_word = '<C-w>',
-            accept_line = '<Tab>',
+            -- accept_line = '<Tab>',
           },
         },
         filetypes = {
