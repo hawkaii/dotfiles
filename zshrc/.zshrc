@@ -30,6 +30,8 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
 
 # Add in snippets
 zinit snippet OMZL::git.zsh
@@ -79,6 +81,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 alias ls='ls --color'
 alias vim='nvim'
 alias c='clear'
+# alias opencode='bun run --conditions=development ~/code/git/opencode/packages/opencode/src/index.ts'
 
 # Default
 export VISUAL=nvim
@@ -106,8 +109,6 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 
 
-case ":$PATH:" in
-esac
 
 
 export NVM_DIR="$HOME/.nvm"
@@ -121,3 +122,41 @@ export NVM_DIR="$HOME/.nvm"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+export PATH="$HOME/.local/bin:$PATH"
+alias ts="~/.local/bin/tmux-sessionizer"
+bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"
+export PATH="$HOME/.cargo/bin:$PATH"
+export DISPLAY=:0
+
+# Set JAVA_HOME for Maven/Quarkus
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-arm64
+export PATH=$JAVA_HOME/bin:$PATH
+
+# pnpm
+export PNPM_HOME="/home/hawkaii/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# opencode
+export PATH=/home/hawkaii/.opencode/bin:$PATH
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/hawkaii/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/hawkaii/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/hawkaii/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/hawkaii/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Shell integrations
+eval "$(zoxide init --cmd cd zsh)"
+eval "$(tv init zsh)"
+
+
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"

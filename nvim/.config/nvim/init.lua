@@ -86,7 +86,7 @@ P.S. You can delete this when you're done too. It's your config now! :)
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.opt.conceallevel = 1
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -640,10 +640,26 @@ require('lazy').setup({
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        ts_ls = {},
-        --
+        -- ... (other servers like gopls, pyright, etc.)
 
+        ts_ls = { -- Use 'ts_ls' as the key for both Mason and lspconfig
+          root_dir = function(fname)
+            if type(fname) ~= 'string' or fname == '' then
+              return nil
+            end
+            -- Guard against special buffers (file explorers, terminals, etc.)
+            local bt = vim.api.nvim_get_option_value('buftype', { buf = 0 })
+            if bt ~= '' then
+              return nil
+            end
+            local util = require('lspconfig.util')
+            local root = util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git')(fname)
+            -- Fallback to directory of file if markers not found
+            return root or util.path.dirname(fname)
+          end,
+        },
+
+        -- ... (other servers like lua_ls, etc.)
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},

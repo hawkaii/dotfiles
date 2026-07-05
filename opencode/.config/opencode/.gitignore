@@ -1,0 +1,8 @@
+node_modules
+package.json
+bun.lock
+package-lock.json
+qwen-auth-accounts.json
+.env
+.env.*
+.gitignore
