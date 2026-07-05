@@ -1,138 +1,78 @@
 
-set $black       #212121
-set $darkblack   #000000
-set $red         #fb4934
-set $darkred     #cc241d
-set $green       #b8bb26
-set $darkgreen   #98971a
-set $yellow      #fabd2f
-set $darkyellow  #d79921
-set $blue        #83a598
-set $darkblue    #458588
-set $magenta     #d3869b
-set $darkmagenta #b16286
-set $cyan        #8ec07c
-set $darkcyan    #689d6a
-set $white       #ebdbb2
-set $darkwhite   #a89984
-set $background  #000000
-set $transparent #00000000
-#
+# Mod key
+set $mod Mod4
 
+# Font
+font pango:Noto Sans 10
 
-#set monitor
-set $pm eDP
-set $sm HDMI-A-0
+# Mouse + Mod to drag floating windows
+floating_modifier $mod
 
-
-# Play/Pause
+# Media keys
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
-
-# Next Track
 bindsym XF86AudioNext exec --no-startup-id playerctl next
-
-# Previous Track
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 
-
-# Volume controls
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+1 i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% && pkill -RTMIN+1 i3blocks
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% && pkill -RTMIN+1 i3blocks
-
-# Brightness controls
+# Brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
-# Windows button
-set $mod Mod4
+# Screenshot
+bindsym Print exec --no-startup-id gnome-screenshot -i
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:Helvetica Neue, FontAwesome 11
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-
-# screenshot
-bindsym Print exec --no-startup-id flameshot gui
-
-# Start a terminal
+# Terminal (opens in workspace 3)
+assign [class="kitty"] workspace 3
+assign [class="firefox"] workspace 1
+assign [class="Firefox"] workspace 1
+assign [class="Firefox-esr"] workspace 1
 bindsym $mod+Return exec kitty
 
+# Go to previous workspace
+bindsym $mod+d workspace back_and_forth
 
-# Kill focused window
+# Kill window
 bindsym $mod+Shift+q kill
 
-# Move workspace to another display
-bindsym $mod+x move workspace to output right
-
-# rofi
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -dmenu -font "Inter 17" '
-bindsym $mod+d exec --no-startup-id synapse
-
-# change focus
+# Focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
+# Move window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# bindsym $mod+space exec rofi -show run
-
-# split in horizontal orientation
-bindsym $mod+semicolon; split v
-
-# split in vertical orientation
+# Layout
+bindsym $mod+semicolon split v
 bindsym $mod+v split h
-
-# enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
+bindsym $mod+space exec rofi -show drun
 bindsym $mod+a focus parent
 
-# workspace back and forth (with/without active container)
+# Workspace back and forth
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
-# focus the child container
-#bindsym $mod+d focus child
 
-# workspace names
+# Workspaces
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -144,8 +84,6 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-
-# switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -157,7 +95,6 @@ bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 
-# move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
@@ -169,159 +106,54 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-#monitors
-workspace 1 output $pm
-workspace 2 output $pm
-workspace 7 output $pm
-workspace 8 output $pm
+# Move workspace between outputs
+bindsym $mod+x move workspace to output right
 
-workspace 3 output $sm
-workspace 4 output $sm
-workspace 5 output $sm
-workspace 6 output $sm
-
-# Move focus between screens
+# Multi-monitor focus
 bindsym $mod+Alt+h focus output left
 bindsym $mod+Alt+Left focus output left
 bindsym $mod+Alt+l focus output right
 bindsym $mod+Alt+Right focus output right
 
-# reload the configuration file
+# Reload / restart / exit
 bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
+# Resize mode
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym j resize shrink width 10 px or 5 ppt
         bindsym k resize grow height 10 px or 5 ppt
         bindsym l resize shrink height 10 px or 5 ppt
         bindsym semicolon resize grow width 10 px or 5 ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 5 ppt
         bindsym Down resize grow height 10 px or 5 ppt
         bindsym Up resize shrink height 10 px or 5 ppt
         bindsym Right resize grow width 10 px or 5 ppt
-
-        # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
 bindsym $mod+r mode "resize"
 
-# Borders
-
-        client.focused           #9aa5ce #364A82 #c0caf5 #9aa5ce   #9aa5ce
-        client.focused_inactive  #16161d #16161d #c0caf5 #16161d   #16161d
-        client.unfocused         #16161d #16161d #c0caf5 #16161d   #16161d
-
-
-for_window [class=".*"] border pixel 2
-for_window [class="copyq"] floating enable; border none
-
-# Set inner/outer gaps
-gaps inner 10
+# Gaps
+gaps inner 5
 gaps outer 0
-
-# Gaps mode
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-bindsym $mod+Shift+g mode "$mode_gaps"
-
-mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
-
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-# exec --no-startup-id sh -c "sleep 2; wal -R"
-exec_always --no-startup-id ~/.config/polybar/launch.sh
-#set wallpaper
+for_window [class=".*"] border pixel 2
 
 
-bindsym $mod+Ctrl+h exec ~/.config/i3/scripts/horizontal.sh
-bindsym $mod+Ctrl+v exec ~/.config/i3/scripts/vertical.sh
+# Polybar
+exec_always --no-startup-id feh --bg-fill ~/dotfiles/backgrounds/grey_lain_wallpaper.jpg
 
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-exec --no-startup-id ~/.config/i3/scripts/vertical.sh
-
-exec --no-startup-id ~/.config/i3/scripts/auto_lock.sh
-
-
-
-# exec_always --no-startup-id picom --experimental-backends --config ~/.config/picom/picom.conf
-# Kill picom and restart it with custom options
-# exec_always --no-startup-id bash -c 'killall picom; picom --experimental-backends --config ~/.config/picom/picom.conf'
-exec_always --no-startup-id ~/.config/i3/scripts/picom.sh
-exec --no-startup-id ~/Applications/Obsidian-1.6.7_fbe5be623488d0ecebb94f3b174ba197.AppImage
-exec_always --no-startup-id spotify
-exec --no-startup-id "wezterm"
-exec --no-startup-id "kitty"
-# exec --no-startup-id "firefox"
-exec --no-startup-id ~/dotfiles/scripts/vlc.sh
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.  
+# NetworkManager applet
 exec --no-startup-id nm-applet
+
+# CopyQ clipboard manager
+exec --no-startup-id copyq
+bindsym $mod+Shift+v exec copyq menu
+
+# Blueman bluetooth
 exec --no-startup-id blueman-applet
-exec --no-startup-id thunar
-exec_always --no-startup-id copyq
-
-exec_always --no-startup-id syncthing
-
-
-
-assign [class="zen" instance="Navigator"] → $ws1
-assign [class="konsole"] → $ws3
-assign [class="kitty"] → $ws3
-assign [class="obsidian"] → $ws2
-
-
-for_window [class="Thunar"]  move scratchpad
-bindsym $mod+Ctrl+n [class = "Thunar"] scratchpad show ; border pixel 5 
-
-for_window  [class= "Spotify"] move scratchpad
-bindsym $mod+Ctrl+m [class = "Spotify"] scratchpad show ; border pixel 5  
-
-for_window [class="pavucontrol"] move scratchpad
-bindsym $mod+Ctrl+p exec --no-startup-id pavucontrol; [class="pavucontrol"] scratchpad show; border pixel 5
-
 
 
